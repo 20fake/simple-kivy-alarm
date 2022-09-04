@@ -1,0 +1,105 @@
+# the root widget / the Screenmanager
+CustomScreenManager:
+    # the screens present in the screen manager
+
+    Homesc:
+
+    Alarmsc:
+
+<Homesc>:
+
+    MDFloatLayout:
+        md_bg_color: 1, 1, 1, 1
+
+        MDTopAppBar:
+            title: "Reminder Lists"
+            pos_hint : {"top" :1}
+
+        MDLabel:
+            id : listalarm
+            text : "The saved reminder will be shown here"
+            font_size : "25sp"
+            pos_hint : {"center_y" :.8}
+            halign : "center"
+
+        MDRoundFlatButton:
+            id : stop_button
+            text: "Stop"
+            pos_hint: {"center_x": .5, "center_y": .3}
+            on_release : root.stopbutton()
+
+        MDRaisedButton:
+            id : alarm_button
+            text : "Add Reminder"
+            pos_hint : {"center_x" : .5, "center_y" :.2}
+            on_release :
+                root.manager.transition.direction = "left"
+                root.manager.current = "alarm"
+
+
+<Alarmsc>:
+
+    MDFloatLayout:
+        md_bg_color: 1, 1, 1, 1
+
+        MDTopAppBar:
+            title: "Add Reminder"
+            pos_hint : {"top" :1}
+
+        MDTextField:
+            id : title_add
+            size: 300, 60
+            size_hint: None, None
+            multiline : True
+            hint_text: "Title"
+            mode: "fill"
+            fill_color: 0, 0, 0, .4
+            pos_hint:{"center_x": .5, "center_y": .8}
+
+        MDTextField:
+            id : alarm_timed
+            size: 300, 30
+            size_hint: None, None
+            hint_text: "Date"
+            text: ""
+            mode: "fill"
+            fill_color: 0, 0, 0, .4
+            readonly : True
+            pos_hint:{"center_x": .5, "center_y": .7}
+
+        MDRaisedButton:
+            text: "Add Time"
+            pos_hint:{"center_x": .75, "center_y": .7}
+            theme_icon_color: "Custom"
+            on_release : root.time_picker()
+
+        MDTextField:
+            id : date_time
+            size: 300, 30
+            size_hint: None, None
+            hint_text: "Date"
+            text: ""
+            mode: "fill"
+            fill_color: 0, 0, 0, .4
+            readonly : True
+            pos_hint:{"center_x": .5, "center_y": .6}
+
+        MDRaisedButton:
+            text: "Add Dates"
+            pos_hint:{"center_x": .75, "center_y": .6}
+            theme_icon_color: "Custom"
+            on_release : root.date_picker()
+
+        MDRaisedButton:
+            text: "Save"
+            pos_hint: {"center_x": .75, "center_y": .2}
+            on_release : root.save_reminder()
+
+        MDRaisedButton:
+            id: back_button
+            text: "Back"
+            pos_hint: {"center_x": .25, "center_y": .2}
+            # the direction should be set before moving to the next screen
+            on_release :
+                root.manager.transition.direction = "right"
+                root.manager.current = "home"
